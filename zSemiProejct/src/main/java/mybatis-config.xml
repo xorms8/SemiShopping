@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
-	<!-- Alias 설정 -->
+	<!-- Alias  설정 -->
 	<typeAliases>
 		<typeAlias alias="board" type="com.javassem.domain.BoardVO" />		
 	</typeAliases>

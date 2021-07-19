@@ -2,7 +2,7 @@ package com.perfume.domain;
 
 public class ProductVO {
 
-	
+	 
 //	CREATE TABLE PRODUCT(
 //		    pID         NUMBER(4)       not null,         --상품번호
 //		    pNAME       VARCHAR2(100)   not null,         --상품이름

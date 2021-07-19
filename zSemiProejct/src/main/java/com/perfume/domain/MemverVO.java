@@ -3,7 +3,7 @@ package com.perfume.domain;
 import java.util.Date;
 
 public class MemverVO {
-
+ 
 	
 //	CREATE TABLE MEMBER(
 //		    mID         VARCHAR2(50)       not null,            --고객 아이디
