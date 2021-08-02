@@ -189,7 +189,7 @@
 }
 .sticky__header.scroll-header .logo a {
   height: 70px;
-  line-height: 70px;
+  line-height: 40px;
 }
 .sticky__header.scroll-header .main__menu > li > a {
   height: 70px;

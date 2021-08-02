@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ReviewDAO">
+   
+   <insert id="insertReview" parameterType="review">
+<!--    INSERT INTO REVIEW (RID,RTITLE,RCONTENT)  -->
+<!--    VALUES(review_seq.nextval, #{rTITLE}, #{rCONTENT} ) -->
+   	INSERT INTO review
+		(
+		rID,pID,
+		mID,rTITLE,rCONTENT
+		) 		
+		VALUES(
+		review_seq.nextval, #{pID}, 
+		#{mID}, #{rTITLE}, #{rCONTENT}
+		)
+   
+   </insert>
+   
+   <select id="getReviewList" resultType="review">
+		
+ 		SELECT * FROM review ORDER BY rID DESC
+
+	</select>
+
+	<update id ="updateReview" parameterType="review">
+		
+		UPDATE REVIEW SET
+		rTITLE = #{rTITLE},
+		rCONTENT = #{rCONTENT}
+		WHERE mID = #{mID}
+		
+	</update>
+	
+	<delete id ="deleteReview" parameterType="review">
+	
+		delete review where mID = #{mID}
+		
+	</delete>
+	
+<!-- 	<select id="readReview" parameterType="String" resultType="review"> -->
+	
+<!-- 	SELECT * FROM review -->
+<!-- 	WHERE mID = #{mID} -->
+	
+<!-- 	</select> -->
+<!-- 	<select id="getReview"  parameterType="review" resultType="review"> -->
+<!-- 		<![CDATA[ -->
+<!-- 		SELECT * -->
+<!-- 		FROM review -->
+<!-- 		WHERE mID = #{mID} -->
+<!-- 		]]> -->
+<!-- 	</select> -->
+	
+</mapper>

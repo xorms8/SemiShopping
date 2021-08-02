@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="AdminDAO">
+  
+  <!-- 상품 등록 -->
+  <insert id="productInsert" parameterType="product">
+  INSERT into PRODUCT(pID, pNAME, pPRICE, pSTOCK, pDETAIL
+  <if test='pFname != null'>
+		,	pFname,pFsize
+		</if>)
+		
+  values (PRODUCT_seq.nextval, #{pNAME}, #{pPRICE}, #{pSTOCK}, #{pDETAIL}
+  
+  <if test='pFname != null'>
+		,	#{pFname}, #{pFsize}
+		</if>
+  )
+  </insert>
+  
+  <!-- 상품 목록 -->
+  <select id ="getProductList" resultType="product">
+  	SELECT * FROM PRODUCT ORDER BY pID DESC
+  </select>
+  
+  <!-- 상품 상세 내역 -->
+  <select id ="getProduct" parameterType="product" resultType="product">
+  	SELECT * FROM PRODUCT WHERE pID= #{pID}
+  </select>
+  
+  <!-- 상품 수정 -->
+  <update id="updateProduct" parameterType="product">
+  UPDATE PRODUCT SET
+  pNAME = #{pNAME},
+  pPRICE = #{pPRICE},
+  pSTOCK = #{pSTOCK},
+  pFname = #{pFname},
+  pDETAIL = #{pDETAIL},
+  pFsize = #{pFsize}
+  WHERE pID = #{pID}
+  </update>
+  
+  <!-- 상품 삭제 -->
+  <delete id="deleteProduct" parameterType="product">
+  DELETE PRODUCT
+  WHERE pID = #{pID}
+  </delete>
+ 
+	<!-- 회원 관리자 모드 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+ 
+  <!-- 회원 목록 -->
+  <select id ="getMemberList" resultType="member">
+  	SELECT * FROM MEMBER ORDER BY mID DESC
+  </select>
+  
+  <!-- 회원 상세 조회 -->
+ <select id ="getMember" parameterType="member" resultType="member">
+  	SELECT * FROM MEMBER WHERE mID= #{mID}
+  </select>
+  
+  
+  <!-- 회원 수정 -->
+  <update id="updateMember" parameterType="member">
+  UPDATE MEMBER SET
+  mNAME = #{mNAME},
+  mEMAIL = #{mEMAIL},
+  mPHONE = #{mPHONE}
+  WHERE mID = #{mID}
+  </update>
+  
+  <!-- 회원 삭제 -->
+  <delete id="deleteMember" parameterType="member">
+  DELETE MEMBER
+  WHERE mID = #{mID}
+  </delete>
+  
+  <!-- 주문 리스트 -->
+  <!-- 유저의 주문 목록(리스트) -->
+<select id="orderList" resultType="order">
+	SELECT oID, mID, oNAME, oADDRESS1, oADDRESS2, oADDRESS3, oPHONE, oAMOUNT, oRDATE, delivery
+	from ORDERS
+	order by oID desc
+</select>	
+
+<!-- 유저의 주문목록 총 모음 3중 조인 쿼리 (주문번호 클릭시 상세 정보)-->
+<!-- orders table + orders details table + product table  -->
+<select id="orderView" resultType="orderView">
+
+select
+    o.oID, o.mID, o.oNAME, o.oADDRESS1, o.oADDRESS2, o.oADDRESS3, o.oPHONE, o.oAMOUNT, o.oRDATE, o.delivery,
+    d.orderDetailsNum, d.pID, d.cartSTOCK,
+    p.pNAME, p.pFname, p.pPRICE
+from orders o 
+    inner join orders_details d
+    on o.oID = d.oID
+    inner join product p
+    on d.pID = p.pID
+where o.oID= #{oID}
+
+</select>
+  
+  
+  <!-- 배송정보 업데이트 -->
+  
+  <update id="delivery">
+  	update orders
+  		set delivery = #{delivery}
+  	where oID = #{oID}
+  
+  </update>
+  
+  </mapper>
